@@ -1,0 +1,92 @@
+.hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 160px 40px 80px;
+    overflow: hidden;
+}
+
+/* Atmospheric glow blobs */
+.glowCyan {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-cyan-glow) 0%, transparent 70%);
+    top: 10%;
+    right: -10%;
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.glowMagenta {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--accent-magenta-glow) 0%, transparent 70%);
+    bottom: 0;
+    left: -5%;
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.label {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+}
+
+.accent {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 60vh;
+        padding: 140px 24px 60px;
+    }
+
+    .glowCyan,
+    .glowMagenta {
+        width: 300px;
+        height: 300px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+}

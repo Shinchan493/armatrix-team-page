@@ -1,0 +1,45 @@
+.footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: 40px;
+    margin-top: 40px;
+}
+
+.inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--text-primary);
+}
+
+.tagline {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+.copy {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+@media (max-width: 600px) {
+    .inner {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+}
