@@ -18,20 +18,12 @@ export default function TeamHero() {
   const titleOpacity = useTransform(scrollYProgress, [0, 0.24], [1, 0]);
 
   return (
-    <section ref={sectionRef} className="page-container relative flex min-h-screen flex-col items-center justify-center py-24 text-center md:py-28">
-      <div className="pointer-events-none absolute -top-8 left-1/2 h-52 w-52 -translate-x-1/2 rounded-full bg-[var(--accent-cyan-glow)] blur-3xl" />
-      <motion.p
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, ease: "easeOut" }}
-        className="mb-6 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.35em] text-[var(--text-tertiary)]"
-      >
-        Team
-      </motion.p>
+    <section ref={sectionRef} className="page-container relative flex min-h-[100svh] flex-col items-center justify-center text-center">
+      <div className="pointer-events-none absolute top-1/4 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-cyan-glow)] blur-[80px]" />
 
       <motion.h1
         style={{ scale: titleScale, y: titleY, opacity: titleOpacity }}
-        className="mt-4 max-w-5xl font-[var(--font-heading)] text-4xl font-semibold leading-[0.98] text-[var(--text-primary)] will-change-transform md:mt-6 md:text-7xl lg:text-[5.6rem]"
+        className="relative z-10 max-w-5xl font-[var(--font-heading)] text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--text-primary)] will-change-transform md:text-7xl lg:text-[5.5rem]"
       >
         {titleWords.map((word, index) => (
           <motion.span
@@ -50,7 +42,7 @@ export default function TeamHero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.55, duration: 0.65, ease: "easeOut" }}
-        className="mt-8 max-w-3xl text-balance text-sm leading-relaxed text-[var(--text-secondary)] md:text-lg"
+        className="mt-6 max-w-2xl text-balance text-[0.95rem] leading-relaxed text-[var(--text-secondary)] md:text-lg"
       >
         A focused team of roboticists, designers, and systems thinkers building fluid intelligence for
         constrained industrial environments.

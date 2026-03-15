@@ -65,7 +65,7 @@ export default function TeamPage() {
         {loading ? (
           <TeamSkeleton />
         ) : error ? (
-          <section className="page-container pb-28">
+          <section className="page-container pt-24 pb-32 md:pt-32 md:pb-40">
             <div className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-8 text-center backdrop-blur-xl">
               <p className="text-sm text-[var(--text-secondary)]">{error}</p>
               <button
@@ -78,12 +78,12 @@ export default function TeamPage() {
           </section>
         ) : (
           <LayoutGroup>
-            <section className="page-container flex flex-col items-center pb-44">
+            <section className="page-container flex flex-col items-center pt-24 pb-32 md:pt-32 md:pb-40">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                className="mx-auto mb-14 max-w-3xl text-center"
+                className="mx-auto mb-16 max-w-3xl text-center md:mb-20"
               >
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--text-tertiary)]">Our team</p>
                 <h2 className="mt-4 font-[var(--font-heading)] text-3xl text-[var(--text-primary)] md:text-5xl">
@@ -95,7 +95,7 @@ export default function TeamPage() {
                 </p>
               </motion.div>
 
-              <div className="mx-auto grid w-full max-w-full justify-center gap-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,360px))]">
+              <div className="mx-auto grid w-full max-w-full justify-center gap-10 md:gap-14 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,380px))]">
                 {members.map((member, index) => (
                   <TeamMemberCard key={member.id} member={member} index={index} onSelect={setSelectedMember} />
                 ))}
@@ -110,9 +110,9 @@ export default function TeamPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="page-container pt-28 pb-24 mt-32"
+          className="page-container mt-8 mb-16 md:mb-24"
         >
-          <div className="join-us-card relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-[var(--bg-card)] p-6 text-center backdrop-blur-xl md:p-9">
+          <div className="join-us-card relative overflow-hidden rounded-[2.5rem] border border-cyan-500/20 bg-[var(--bg-card)] p-10 text-center backdrop-blur-xl sm:p-14 md:p-20">
             {/* Animated grid background */}
             <div
               aria-hidden
@@ -144,7 +144,7 @@ export default function TeamPage() {
         </motion.section>
 
         {!loading && !error ? (
-          <section className="page-container pb-24">
+          <section className="page-container pt-24 pb-32 md:pt-32 md:pb-40">
             <AdminPanel members={members} onMembersChange={loadMembers} />
           </section>
         ) : null}

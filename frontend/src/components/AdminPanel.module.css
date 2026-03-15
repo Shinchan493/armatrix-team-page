@@ -1,11 +1,11 @@
 .section {
     width: 100%;
-    padding-top: 12px;
+    padding-top: 16px;
 }
 
 .header {
     max-width: 720px;
-    margin: 0 auto 18px;
+    margin: 0 auto 28px;
     text-align: center;
 }
 

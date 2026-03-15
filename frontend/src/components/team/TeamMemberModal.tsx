@@ -37,11 +37,11 @@ export default function TeamMemberModal({ member, onClose }: Props) {
             layoutId={`card-${member.id}`}
             layout
             transition={{ type: "spring", stiffness: 340, damping: 34, mass: 0.9 }}
-            className="relative z-10 max-h-[84vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-[var(--border-hover)] bg-[rgba(7,10,18,0.9)] p-4 md:p-8"
+            className="relative z-10 max-h-[84vh] w-full max-w-5xl overflow-y-auto rounded-[2.5rem] border border-[var(--border-hover)] bg-[rgba(7,10,18,0.9)] p-6 md:p-12"
           >
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 rounded-full border border-[var(--border-subtle)] px-3 py-1 text-xs tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
+              className="absolute right-6 top-6 md:right-8 md:top-8 rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
             >
               CLOSE
             </button>

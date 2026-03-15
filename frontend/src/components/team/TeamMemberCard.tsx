@@ -56,7 +56,7 @@ export default function TeamMemberCard({ member, index, onSelect }: Props) {
       transition={{ delay: index * 0.07, type: "spring", damping: 18, stiffness: 100 }}
       whileHover={{ y: -6 }}
       style={{ rotateX: springX, rotateY: springY, transformStyle: "preserve-3d", perspective: 1000 }}
-      className="group relative min-h-[420px] w-full max-w-[360px] overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4 text-center backdrop-blur-xl transition-colors duration-300 hover:border-[var(--border-hover)]"
+      className="group relative min-h-[440px] w-full max-w-[380px] overflow-hidden rounded-[2rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 md:p-8 text-center backdrop-blur-xl transition-colors duration-300 hover:border-[var(--border-hover)]"
     >
       <div
         aria-hidden
@@ -76,18 +76,18 @@ export default function TeamMemberCard({ member, index, onSelect }: Props) {
           height={900}
           unoptimized={isDicebearAvatar}
           onError={() => setImageSrc(fallbackPhotoUrl)}
-          className="h-72 w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.05] group-hover:grayscale-0"
+          className="h-80 w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.05] group-hover:grayscale-0"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
       </div>
 
-      <div className="relative pb-1 pt-5">
+      <div className="relative pb-4 pt-6">
         <p className="text-xs uppercase tracking-[0.22em] text-[var(--text-tertiary)]">{member.role}</p>
         <h3
-          className="mt-2 text-[1.65rem] font-bold leading-[1.15] tracking-tight text-[var(--text-primary)]"
+          className="mt-3 text-[1.75rem] font-bold leading-[1.15] tracking-tight text-[var(--text-primary)]"
           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
         >{member.name}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">{member.bio.slice(0, 138)}...</p>
+        <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">{member.bio.slice(0, 138)}...</p>
       </div>
     </motion.button>
   );

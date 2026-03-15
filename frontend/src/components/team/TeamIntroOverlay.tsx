@@ -13,15 +13,7 @@ export default function TeamIntroOverlay() {
 
   useEffect(() => {
     setIsMounted(true);
-
-    try {
-      const hasSeenIntro = window.sessionStorage.getItem(SESSION_KEY);
-      if (!hasSeenIntro) {
-        setIsVisible(true);
-      }
-    } catch {
-      setIsVisible(true);
-    }
+    setIsVisible(true);
   }, []);
 
   useEffect(() => {
@@ -37,10 +29,6 @@ export default function TeamIntroOverlay() {
   }, [isVisible]);
 
   const dismiss = () => {
-    try {
-      window.sessionStorage.setItem(SESSION_KEY, "true");
-    } catch {}
-
     videoRef.current?.pause();
     setIsVisible(false);
   };
