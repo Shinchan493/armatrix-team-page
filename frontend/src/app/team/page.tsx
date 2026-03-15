@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TeamBackground3D from "@/components/team/TeamBackground3D";
 import TeamHero from "@/components/team/TeamHero";
+import TeamIntroOverlay from "@/components/team/TeamIntroOverlay";
 import TeamMemberCard from "@/components/team/TeamMemberCard";
 import TeamMemberModal from "@/components/team/TeamMemberModal";
 import TeamSkeleton from "@/components/team/TeamSkeleton";
@@ -47,6 +48,7 @@ export default function TeamPage() {
 
   return (
     <>
+      <TeamIntroOverlay />
       <CustomCursor />
       <Navbar />
       <TeamBackground3D scrollProgress={scrollProgress} />
@@ -79,22 +81,18 @@ export default function TeamPage() {
               >
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--text-tertiary)]">Our team</p>
                 <h2 className="mt-4 font-[var(--font-heading)] text-3xl text-[var(--text-primary)] md:text-5xl">
-                  Engineering command, centered in focus.
+                  The people building Armatrix.
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
-                  The team behind Armatrix brings together robotics, product design, perception,
-                  and platform engineering to build dependable systems for real industrial environments.
+                  From robotics and perception to product design and platform engineering, our team
+                  builds dependable systems for real industrial environments.
                 </p>
               </motion.div>
 
-              <div className="mx-auto grid w-fit max-w-full justify-center gap-8 [grid-template-columns:repeat(auto-fit,minmax(320px,360px))]">
+              <div className="mx-auto grid w-full max-w-full justify-center gap-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,360px))]">
                 {members.map((member, index) => (
                   <TeamMemberCard key={member.id} member={member} index={index} onSelect={setSelectedMember} />
                 ))}
-              </div>
-
-              <div className="mt-14 w-full">
-                <AdminPanel members={members} onMembersChange={loadMembers} />
               </div>
             </section>
 
@@ -120,12 +118,18 @@ export default function TeamPage() {
               href="https://armatrix.in/careers"
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex rounded-full border border-[var(--border-subtle)] px-7 py-3.5 text-[0.84rem] font-semibold uppercase tracking-[0.2em] text-[var(--text-secondary)] transition hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
+              className="mt-6 inline-flex min-w-[230px] justify-center rounded-full border border-cyan-300/40 bg-cyan-400/12 px-9 py-4 text-[0.9rem] font-semibold uppercase tracking-[0.2em] text-cyan-100 shadow-[0_0_0_1px_rgba(103,232,249,0.12),0_0_32px_rgba(34,211,238,0.18)] transition hover:border-cyan-200/70 hover:bg-cyan-300/18 hover:text-white hover:shadow-[0_0_0_1px_rgba(165,243,252,0.18),0_0_40px_rgba(34,211,238,0.24)]"
             >
               View Open Roles
             </a>
           </div>
         </motion.section>
+
+        {!loading && !error ? (
+          <section className="page-container pb-24">
+            <AdminPanel members={members} onMembersChange={loadMembers} />
+          </section>
+        ) : null}
       </main>
 
       <Footer />

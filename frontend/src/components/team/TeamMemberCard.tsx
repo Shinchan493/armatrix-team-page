@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { type MouseEvent, useState } from "react";
+import { type MouseEvent, useMemo, useState } from "react";
 import type { TeamMember } from "@/lib/team-types";
 
 type Props = {
@@ -12,7 +12,12 @@ type Props = {
 };
 
 export default function TeamMemberCard({ member, index, onSelect }: Props) {
-  const isDicebearAvatar = member.photo_url.includes("api.dicebear.com");
+  const fallbackPhotoUrl = useMemo(
+    () => `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(member.name)}&backgroundColor=transparent`,
+    [member.name],
+  );
+  const [imageSrc, setImageSrc] = useState(member.photo_url || fallbackPhotoUrl);
+  const isDicebearAvatar = imageSrc.includes("api.dicebear.com");
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const springX = useSpring(rotateX, { damping: 12, stiffness: 200 });
@@ -64,11 +69,12 @@ export default function TeamMemberCard({ member, index, onSelect }: Props) {
 
       <div className="relative overflow-hidden rounded-2xl">
         <Image
-          src={member.photo_url}
+          src={imageSrc}
           alt={member.name}
           width={900}
           height={900}
           unoptimized={isDicebearAvatar}
+          onError={() => setImageSrc(fallbackPhotoUrl)}
           className="h-72 w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.05] group-hover:grayscale-0"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />

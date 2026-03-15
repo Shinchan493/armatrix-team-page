@@ -95,12 +95,17 @@ export default function AdminPanel({ members, onMembersChange }) {
 
     return (
         <section className={styles.section}>
+            <div className={styles.header}>
+                <p className={styles.eyebrow}>Internal tools</p>
+                <h3 className={styles.title}>Manage team members</h3>
+            </div>
+
             <button
                 className={styles.toggle}
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <span className={styles.toggleIcon}>{isOpen ? "−" : "+"}</span>
-                <span>Admin Panel — Manage Team Members</span>
+                <span>{isOpen ? "Hide team management" : "Open team management"}</span>
             </button>
 
             {isOpen && (

@@ -80,7 +80,7 @@ def _seed_members() -> Dict[str, TeamMember]:
             "name": "Rudra Khanna",
             "role": "Full-Stack Platform Engineer",
             "bio": "Rudra connects firmware telemetry, cloud orchestration, and operator dashboards into one seamless platform with low-latency observability built in.",
-            "photo_url": "https://images.unsplash.com/photo-1506277886983-5f1a9d18fa49?auto=format&fit=crop&w=900&q=80",
+            "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
             "linkedin_url": "https://linkedin.com/in/rudra-khanna",
             "github_url": "https://github.com/rudra-khanna",
         },
