@@ -2,63 +2,86 @@
 
 A **Team Page** for [Armatrix](https://armatrix.in) — a company building snake-like robotic arms for confined and hazardous spaces.
 
-**Backend**: Python + FastAPI + MongoDB Atlas  
-**Frontend**: React + Next.js  
-**Design**: Dark theme inspired by [armatrix.in](https://armatrix.in) — glassmorphism, atmospheric glows, Space Grotesk typography
+**Live**: [armatrix-team-page-weld.vercel.app/team](https://armatrix-team-page-weld.vercel.app/team)
 
 ---
 
-## 🏗️ Architecture
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14, React, Framer Motion, Tailwind CSS v4 |
+| Backend | Python, FastAPI, Pydantic |
+| Database | MongoDB Atlas (Motor async driver) |
+| Deployment | Vercel (frontend), local dev (backend) |
+
+---
+
+## Project Structure
 
 ```
 armatrix-team-page/
-├── backend/          # FastAPI REST API
-│   ├── main.py       # App entry point, CORS, lifespan
-│   ├── models.py     # Pydantic schemas
-│   ├── database.py   # MongoDB connection (Motor async driver)
-│   ├── routes.py     # CRUD endpoints
-│   └── seed.py       # Seed script for initial data
-├── frontend/         # Next.js React app
+├── backend/
+│   ├── main.py          # FastAPI app — CORS, CRUD routes, MongoDB connection
+│   ├── database.py      # Motor async client setup
+│   ├── models.py        # Pydantic schemas (TeamMember)
+│   ├── routes.py        # API route handlers
+│   ├── seed.py          # DB seed script
+│   └── requirements.txt
+├── frontend/
 │   └── src/
-│       ├── app/team/ # Team page route
-│       ├── components/ # Navbar, HeroSection, TeamCard, TeamGrid, TeamModal, AdminPanel, Footer
-│       └── lib/api.js  # Backend API helpers
+│       ├── app/
+│       │   ├── globals.css        # Tailwind v4 imports + base reset
+│       │   └── team/page.tsx      # Team page route
+│       ├── components/
+│       │   ├── Navbar.js          # Responsive navigation bar
+│       │   ├── Footer.js          # Site footer
+│       │   ├── CustomCursor.js    # Magnetic trailing cursor effect
+│       │   ├── AdminPanel.js      # Admin CRUD panel (add/edit/delete/reorder)
+│       │   └── team/
+│       │       ├── TeamHero.tsx        # Hero section with animated scroll waves
+│       │       ├── TeamMemberCard.tsx  # Glassmorphism member card
+│       │       ├── TeamMemberModal.tsx # Detailed member modal
+│       │       ├── TeamBackground3D.tsx# Animated background
+│       │       ├── TeamIntroOverlay.tsx# Page intro animation
+│       │       └── TeamSkeleton.tsx   # Loading skeleton
+│       └── lib/api.js     # Backend API helpers
 └── README.md
 ```
 
 ---
 
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
+
 - Python 3.11+
 - Node.js 18+
-- MongoDB Atlas account (free tier)
+- MongoDB Atlas account (free tier works)
 
 ### Backend
 
 ```bash
 cd backend
 
-# Create virtual environment
+# Create and activate virtual environment
 python3.11 -m venv venv
 source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Configure environment
-cp .env.example .env
-# Edit .env with your MongoDB Atlas connection string
+# Configure environment — create a .env file with:
+#   MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority
 
-# Seed the database
+# Seed the database (optional, populates sample members)
 python seed.py
 
 # Start the server
 uvicorn main:app --reload --port 8000
 ```
 
-API docs available at: `http://localhost:8000/docs`
+API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ### Frontend
 
@@ -72,35 +95,57 @@ npm install
 npm run dev
 ```
 
-Visit: `http://localhost:3000/team`
+Visit: [http://localhost:3000/team](http://localhost:3000/team)
 
 ---
 
-## 🎨 Design Decisions
-
-1. **Brand-aligned dark theme**: Pure black (`#000`) backgrounds with glassmorphism cards, matching the Armatrix website's futuristic aesthetic
-2. **Department color coding**: Each department has a distinct accent color (Leadership=Gold, Engineering=Cyan, Design=Magenta, Operations=Green, Marketing=Purple)
-3. **Atmospheric glows**: Subtle radial gradient blobs create depth, inspired by armatrix.in's hero section
-4. **Typography**: Space Grotesk for headings (geometric, engineered feel) + Inter for body (clean readability)
-5. **MongoDB over in-memory**: Data persists across server restarts, more realistic for production
-6. **Motor async driver**: Non-blocking MongoDB operations since FastAPI is async
-7. **DiceBear avatars**: Auto-generated profile illustrations — no placeholder images needed
-
----
-
-## 📡 API Endpoints
+## API Endpoints
 
 | Method | Route | Description |
 |--------|-------|-------------|
-| `GET` | `/api/team/` | List all members (sorted by order) |
-| `GET` | `/api/team/{id}` | Get one member |
-| `POST` | `/api/team/` | Create a member |
-| `PUT` | `/api/team/{id}` | Update a member |
+| `GET` | `/api/team/` | List all members (sorted by `order`) |
+| `GET` | `/api/team/{id}` | Get a single member |
+| `POST` | `/api/team/` | Create a new member |
+| `PUT` | `/api/team/{id}` | Update an existing member |
 | `DELETE` | `/api/team/{id}` | Delete a member |
+| `PUT` | `/api/team/reorder` | Bulk update member ordering |
 
 ---
 
-## 🌐 Deployment
+## Design Decisions
 
-- **Backend**: Deploy to [Render](https://render.com) (free web service) — set `MONGODB_URI` env var
-- **Frontend**: Deploy to [Vercel](https://vercel.com) — set `NEXT_PUBLIC_API_URL` to your Render backend URL
+### Visual Design
+
+- **Dark theme**: Pure black backgrounds with glassmorphism cards, matching the Armatrix website's futuristic aesthetic.
+- **Department color coding**: Each department gets a distinct accent — Leadership (Gold), Engineering (Cyan), Design (Magenta), Operations (Green), Marketing (Purple).
+- **Atmospheric glows**: Subtle radial gradient blobs create depth, inspired by armatrix.in's hero section.
+- **Typography**: Space Grotesk for headings (geometric, engineered feel) + Inter for body text (clean readability).
+- **Custom cursor**: A magnetic trailing dot cursor that grows when hovering over interactive elements, matching the feel of armatrix.in.
+
+### Scroll-Animated Sine Waves
+
+The hero section features dashed sine-wave "tentacles" flanking the SCROLL indicator. These waves grow outward from the Armatrix logo boxes as the user scrolls down, and shrink back when scrolling up. Built with Framer Motion's `useScroll` + `useSpring` for smooth, GPU-composited animations. Hidden on mobile for a clean experience.
+
+### Drag-and-Drop Reordering
+
+Team member cards can be reordered via drag-and-drop in the admin panel. This was a deliberate choice over manual "move up/down" buttons because:
+
+- **Intuitive**: Dragging cards mirrors how you'd physically rearrange items — no extra UI to learn.
+- **Efficient**: Reordering multiple members is fast — just drag them where you want, rather than clicking arrows repeatedly.
+- **Persistent**: The new order is saved to MongoDB via the `/api/team/reorder` endpoint, so the public-facing page reflects the admin's arrangement immediately.
+- **Optimistic updates**: The UI updates instantly on drag without waiting for the API response, keeping the experience smooth. The admin panel stays open throughout — no jarring reloads.
+
+### Technical Decisions
+
+- **Tailwind v4 with `@layer base` reset**: The global CSS reset (`* { margin: 0; padding: 0 }`) is wrapped in `@layer base` to prevent it from overriding Tailwind's layered utility classes — a critical fix for Tailwind v4's CSS layer architecture.
+- **MongoDB over in-memory storage**: Data persists across server restarts. The backend connects to Atlas via Motor (async driver) for non-blocking operations.
+- **Dual photo input**: The admin panel supports both URL paste and local file upload (converted to base64 data URIs), so members can use any image source.
+- **Pydantic `str` over `HttpUrl`**: Photo, LinkedIn, and GitHub fields use plain `str` to accept both regular URLs and base64 data URIs.
+
+---
+
+## Deployment
+
+- **Frontend**: Deployed on [Vercel](https://vercel.com) — set `NEXT_PUBLIC_API_URL` environment variable to the backend URL.
+- **Backend**: Can be deployed to [Render](https://render.com) or [Railway](https://railway.app) — set `MONGODB_URI` environment variable.
+- **Database**: MongoDB Atlas (free M0 tier) — whitelist the backend server's IP in Network Access.
