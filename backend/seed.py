@@ -17,8 +17,8 @@ SEED_DATA = [
         "department": "Leadership",
         "bio": "Arjun leads Armatrix's vision to revolutionize industrial inspection with snake-like robotic arms. Previously at ISRO's robotics division.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=arjun&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/arjunmehta",
-        "github_url": "@arjun_armatrix",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
+        "github_url": "https://github.com/Shinchan493",
         "order": 1,
     },
     {
@@ -27,8 +27,8 @@ SEED_DATA = [
         "department": "Leadership",
         "bio": "Priya architects the control systems behind Armatrix's hyper-redundant robotic arms. PhD in Robotics from IIT Bombay.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=priya&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/priyasharma",
-        "github_url": "@priya_robotics",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
+        "github_url": "https://github.com/Shinchan493",
         "order": 2,
     },
     {
@@ -37,7 +37,7 @@ SEED_DATA = [
         "department": "Engineering",
         "bio": "Vikram designs the mechanical systems for Armatrix's 3-meter MVP arm. Specializes in compliant mechanisms and kinematics.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=vikram&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/vikramrao",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
         "order": 3,
     },
     {
@@ -46,7 +46,7 @@ SEED_DATA = [
         "department": "Engineering",
         "bio": "Sneha writes the embedded code that makes the robotic arm move with precision. Expert in real-time control systems and motor drivers.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=sneha&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/snehaiyer",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
         "order": 4,
     },
     {
@@ -55,8 +55,8 @@ SEED_DATA = [
         "department": "Engineering",
         "bio": "Rohan builds the AI-powered navigation that lets Armatrix arms adapt in real time to complex, confined workspaces.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=rohan&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/rohankapoor",
-        "github_url": "@rohan_ml",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
+        "github_url": "https://github.com/Shinchan493",
         "order": 5,
     },
     {
@@ -65,7 +65,7 @@ SEED_DATA = [
         "department": "Design",
         "bio": "Ananya crafts the interfaces and visualizations that make controlling complex robotic systems feel intuitive.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=ananya&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/ananyadesai",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
         "order": 6,
     },
     {
@@ -74,7 +74,7 @@ SEED_DATA = [
         "department": "Operations",
         "bio": "Karthik handles manufacturing partnerships, supply chain, and ensures Armatrix delivers prototypes on time.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=karthik&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/karthiknair",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
         "order": 7,
     },
     {
@@ -83,8 +83,8 @@ SEED_DATA = [
         "department": "Marketing",
         "bio": "Meera tells the Armatrix story to the world — from Shell E4 demos to IAC presentations. Background in deep-tech marketing.",
         "photo_url": "https://api.dicebear.com/7.x/notionists/svg?seed=meera&backgroundColor=transparent",
-        "linkedin_url": "https://linkedin.com/in/meerajoshi",
-        "github_url": "@meera_armatrix",
+        "linkedin_url": "https://www.linkedin.com/in/ayushkumar493/",
+        "github_url": "https://github.com/Shinchan493",
         "order": 8,
     },
 ]

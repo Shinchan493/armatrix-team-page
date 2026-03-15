@@ -68,7 +68,7 @@ export default function TeamMemberModal({ member, onClose }: Props) {
                   {member.role}
                 </motion.p>
                 <h2
-                  className="mt-3 flex flex-wrap justify-center gap-x-[0.18em] text-[2.4rem] font-bold leading-[1.1] tracking-tight text-[var(--text-primary)] md:text-[3.6rem]"
+                  className="mt-3 flex flex-nowrap justify-center gap-x-[0.18em] whitespace-nowrap text-[clamp(1.6rem,5vw,3.6rem)] font-bold leading-[1.1] tracking-tight text-[var(--text-primary)]"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   aria-label={member.name}
                 >
