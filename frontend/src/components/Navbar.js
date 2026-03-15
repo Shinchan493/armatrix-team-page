@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
@@ -31,7 +32,14 @@ export default function Navbar() {
                 </a>
                 <div className={styles.links}>
                     <a href="https://armatrix.in" target="_blank" rel="noopener noreferrer">HOME</a>
-                    <a href="/team" className={styles.active}>TEAM</a>
+                    <a href="/team" className={styles.active}>
+                        TEAM
+                        <motion.span
+                            layoutId="nav-pill"
+                            className={styles.activePill}
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                    </a>
                     <a href="https://armatrix.in/careers" target="_blank" rel="noopener noreferrer">CAREERS</a>
                     <a href="https://armatrix.in/blog" target="_blank" rel="noopener noreferrer">BLOG</a>
                 </div>

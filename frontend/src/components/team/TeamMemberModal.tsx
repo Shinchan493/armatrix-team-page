@@ -16,20 +16,28 @@ export default function TeamMemberModal({ member, onClose }: Props) {
     <AnimatePresence>
       {member ? (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+          key="modal-root"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:px-8 md:py-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.22, ease: "easeInOut" }}
         >
           <motion.button
             className="absolute inset-0 bg-black/70 backdrop-blur-md"
             aria-label="Close modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
             onClick={onClose}
           />
 
           <motion.article
             layoutId={`card-${member.id}`}
-            className="relative z-10 max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-[var(--border-hover)] bg-[rgba(7,10,18,0.9)] p-4 md:p-8"
+            layout
+            transition={{ type: "spring", stiffness: 340, damping: 34, mass: 0.9 }}
+            className="relative z-10 max-h-[84vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-[var(--border-hover)] bg-[rgba(7,10,18,0.9)] p-4 md:p-8"
           >
             <button
               onClick={onClose}
@@ -51,12 +59,30 @@ export default function TeamMemberModal({ member, onClose }: Props) {
               </div>
 
               <div className="flex flex-col items-center justify-center pt-4 text-center md:pt-8">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-[var(--text-accent)]">{member.role}</p>
-                <h2
-                  className="mt-3 text-[2.4rem] font-bold leading-[1.1] tracking-tight text-[var(--text-primary)] md:text-[3.6rem]"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15, duration: 0.5 }}
+                  className="text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-[var(--text-accent)]"
                 >
-                  {member.name}
+                  {member.role}
+                </motion.p>
+                <h2
+                  className="mt-3 flex flex-wrap justify-center gap-x-[0.18em] text-[2.4rem] font-bold leading-[1.1] tracking-tight text-[var(--text-primary)] md:text-[3.6rem]"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  aria-label={member.name}
+                >
+                  {member.name.split("").map((char, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      transition={{ delay: 0.18 + i * 0.032, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      className={char === " " ? "w-[0.28em]" : "inline-block"}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
                 </h2>
                 <div className="mt-4 h-px w-12 bg-[var(--accent-cyan)] opacity-60" />
                 <p className="mt-5 max-w-2xl text-[0.93rem] leading-[1.75] text-[var(--text-secondary)] md:text-[1rem]">{member.bio}</p>

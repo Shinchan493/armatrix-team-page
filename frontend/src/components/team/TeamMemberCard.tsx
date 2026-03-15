@@ -46,13 +46,14 @@ export default function TeamMemberCard({ member, index, onSelect }: Props) {
   return (
     <motion.button
       layoutId={`card-${member.id}`}
+      layout
       onClick={() => onSelect(member)}
       onMouseMove={onMouseMove}
       onMouseLeave={reset}
-      initial={{ opacity: 0, y: 24, scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 32, scale: 0.96, rotate: index % 2 === 0 ? -3 : 3 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ delay: index * 0.06, type: "spring", damping: 16, stiffness: 120 }}
+      transition={{ delay: index * 0.07, type: "spring", damping: 18, stiffness: 100 }}
       whileHover={{ y: -6 }}
       style={{ rotateX: springX, rotateY: springY, transformStyle: "preserve-3d", perspective: 1000 }}
       className="group relative min-h-[420px] w-full max-w-[360px] overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4 text-center backdrop-blur-xl transition-colors duration-300 hover:border-[var(--border-hover)]"
