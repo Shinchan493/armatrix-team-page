@@ -2,7 +2,8 @@
 
 A **Team Page** for [Armatrix](https://armatrix.in) — a company building snake-like robotic arms for confined and hazardous spaces.
 
-**Live**: [armatrix-team-page-weld.vercel.app/team](https://armatrix-team-page-weld.vercel.app/team)
+**Frontend**: [armatrix-team-page-weld.vercel.app](https://armatrix-team-page-weld.vercel.app/)
+**Backend API**: [armatrix-team-page-932b.onrender.com](https://armatrix-team-page-932b.onrender.com)
 
 ---
 
@@ -13,7 +14,7 @@ A **Team Page** for [Armatrix](https://armatrix.in) — a company building snake
 | Frontend | Next.js 14, React, Framer Motion, Tailwind CSS v4 |
 | Backend | Python, FastAPI, Pydantic |
 | Database | MongoDB Atlas (Motor async driver) |
-| Deployment | Vercel (frontend), local dev (backend) |
+| Deployment | Vercel (frontend), Render (backend) |
 
 ---
 
@@ -146,6 +147,6 @@ Team member cards can be reordered via drag-and-drop in the admin panel. This wa
 
 ## Deployment
 
-- **Frontend**: Deployed on [Vercel](https://vercel.com) — set `NEXT_PUBLIC_API_URL` environment variable to the backend URL.
-- **Backend**: Can be deployed to [Render](https://render.com) or [Railway](https://railway.app) — set `MONGODB_URI` environment variable.
-- **Database**: MongoDB Atlas (free M0 tier) — whitelist the backend server's IP in Network Access.
+- **Frontend**: Deployed on [Vercel](https://vercel.com) — set `NEXT_PUBLIC_API_URL` env var to the backend URL (`https://armatrix-team-page-932b.onrender.com`).
+- **Backend**: Deployed on [Render](https://render.com) — set `MONGODB_URI` env var to your Atlas connection string.
+- **Database**: MongoDB Atlas (free M0 tier) — set Network Access to `0.0.0.0/0` (allow all) so Render can connect.
