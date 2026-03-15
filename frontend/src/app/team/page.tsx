@@ -76,7 +76,7 @@ export default function TeamPage() {
         {loading ? (
           <TeamSkeleton />
         ) : error ? (
-          <section className="page-container pt-24 pb-32 md:pt-32 md:pb-40">
+          <section className="page-container pt-12 pb-20 sm:pt-24 sm:pb-32 md:pt-32 md:pb-40">
             <div className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-8 text-center backdrop-blur-xl">
               <p className="text-sm text-[var(--text-secondary)]">{error}</p>
               <button
@@ -89,24 +89,24 @@ export default function TeamPage() {
           </section>
         ) : (
           <LayoutGroup>
-            <section className="page-container flex flex-col items-center pt-24 pb-32 md:pt-32 md:pb-40">
+            <section className="page-container flex flex-col items-center pt-16 pb-20 sm:pt-24 sm:pb-32 md:pt-32 md:pb-40">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                className="mx-auto mb-16 max-w-3xl text-center md:mb-20"
+                className="mx-auto mb-10 max-w-3xl text-center sm:mb-16 md:mb-20"
               >
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--text-tertiary)]">Our team</p>
-                <h2 className="mt-4 font-[var(--font-heading)] text-3xl text-[var(--text-primary)] md:text-5xl">
+                <h2 className="mt-3 font-[var(--font-heading)] text-2xl text-[var(--text-primary)] sm:mt-4 sm:text-3xl md:text-5xl">
                   The people building Armatrix.
                 </h2>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
+                <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)] sm:mt-4 sm:text-sm md:text-base">
                   From robotics and perception to product design and platform engineering, our team
                   builds dependable systems for real industrial environments.
                 </p>
               </motion.div>
 
-              <div className="mx-auto grid w-full max-w-full justify-center gap-10 md:gap-14 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,380px))]">
+              <div className="mx-auto grid w-full max-w-full justify-center gap-6 sm:gap-10 md:gap-14 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,380px))]">
                 {members.map((member, index) => (
                   <TeamMemberCard key={member.id} member={member} index={index} onSelect={setSelectedMember} />
                 ))}
@@ -121,9 +121,9 @@ export default function TeamPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="page-container mt-8 mb-16 md:mb-24"
+          className="page-container mt-4 mb-10 sm:mt-8 sm:mb-16 md:mb-24"
         >
-          <div className="join-us-card relative overflow-hidden rounded-[2.5rem] border border-cyan-500/20 bg-[var(--bg-card)] p-10 text-center backdrop-blur-xl sm:p-14 md:p-20">
+          <div className="join-us-card relative overflow-hidden rounded-[1.5rem] border border-cyan-500/20 bg-[var(--bg-card)] p-6 text-center backdrop-blur-xl sm:rounded-[2.5rem] sm:p-10 md:p-14 lg:p-20">
             {/* Animated grid background */}
             <div
               aria-hidden
@@ -138,7 +138,7 @@ export default function TeamPage() {
             <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-cyan-400/30 animate-[breatheGlow_3s_ease-in-out_infinite]" />
             <p className="relative text-[0.86rem] font-semibold uppercase tracking-[0.32em] text-[var(--text-tertiary)]">Join us</p>
             <h3
-              className="relative mt-3 text-[2rem] font-bold leading-[1.08] tracking-tight text-[var(--text-primary)] md:text-[3rem]"
+              className="relative mt-3 text-[1.4rem] font-bold leading-[1.08] tracking-tight text-[var(--text-primary)] sm:text-[2rem] md:text-[3rem]"
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
               Build the future of robotics with us.
@@ -147,7 +147,7 @@ export default function TeamPage() {
               href="https://armatrix.in/careers"
               target="_blank"
               rel="noreferrer"
-              className="relative mt-6 inline-flex min-w-[230px] justify-center rounded-full border border-cyan-300/40 bg-cyan-400/12 px-9 py-4 text-[0.9rem] font-semibold uppercase tracking-[0.2em] text-cyan-100 shadow-[0_0_0_1px_rgba(103,232,249,0.12),0_0_32px_rgba(34,211,238,0.18)] transition hover:border-cyan-200/70 hover:bg-cyan-300/18 hover:text-white hover:shadow-[0_0_0_1px_rgba(165,243,252,0.18),0_0_40px_rgba(34,211,238,0.24)]"
+              className="relative mt-5 inline-flex min-w-[180px] justify-center rounded-full border border-cyan-300/40 bg-cyan-400/12 px-6 py-3 text-[0.75rem] font-semibold uppercase tracking-[0.15em] sm:mt-6 sm:min-w-[230px] sm:px-9 sm:py-4 sm:text-[0.9rem] sm:tracking-[0.2em] text-cyan-100 shadow-[0_0_0_1px_rgba(103,232,249,0.12),0_0_32px_rgba(34,211,238,0.18)] transition hover:border-cyan-200/70 hover:bg-cyan-300/18 hover:text-white hover:shadow-[0_0_0_1px_rgba(165,243,252,0.18),0_0_40px_rgba(34,211,238,0.24)]"
             >
               View Open Roles
             </a>
@@ -155,7 +155,7 @@ export default function TeamPage() {
         </motion.section>
 
         {!loading && !error ? (
-          <section className="page-container pt-24 pb-32 md:pt-32 md:pb-40">
+          <section className="page-container pt-12 pb-20 sm:pt-24 sm:pb-32 md:pt-32 md:pb-40">
             <AdminPanel members={members} onMembersChange={loadMembers} onSilentRefresh={refreshMembers} setMembers={setMembers} />
           </section>
         ) : null}

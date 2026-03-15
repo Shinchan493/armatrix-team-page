@@ -17,7 +17,7 @@ export default function TeamMemberModal({ member, onClose }: Props) {
       {member ? (
         <motion.div
           key="modal-root"
-          className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 md:px-8 md:py-12"
+          className="fixed inset-0 z-50 flex items-center justify-center px-3 py-4 sm:px-4 sm:py-8 md:px-8 md:py-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -37,16 +37,16 @@ export default function TeamMemberModal({ member, onClose }: Props) {
             layoutId={`card-${member.id}`}
             layout
             transition={{ type: "spring", stiffness: 340, damping: 34, mass: 0.9 }}
-            className="relative z-10 max-h-[84vh] w-full max-w-5xl overflow-y-auto rounded-[2.5rem] border border-[var(--border-hover)] bg-[rgba(7,10,18,0.9)] p-6 md:p-12"
+            className="relative z-10 max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[1.5rem] border border-[var(--border-hover)] bg-[rgba(7,10,18,0.9)] p-4 sm:max-h-[84vh] sm:rounded-[2.5rem] sm:p-6 md:p-12"
           >
             <button
               onClick={onClose}
-              className="absolute right-6 top-6 md:right-8 md:top-8 rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
+              className="absolute right-4 top-4 sm:right-6 sm:top-6 md:right-8 md:top-8 rounded-full border border-[var(--border-subtle)] px-3 py-1.5 text-[0.65rem] tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-hover)] hover:text-[var(--text-primary)] sm:px-4 sm:py-2 sm:text-xs"
             >
               CLOSE
             </button>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-[0.9fr_1.1fr] md:gap-10">
+            <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-[0.9fr_1.1fr] md:gap-10">
               <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)]">
                 <Image
                   src={member.photo_url}
@@ -58,17 +58,17 @@ export default function TeamMemberModal({ member, onClose }: Props) {
                 />
               </div>
 
-              <div className="flex flex-col items-center justify-center pt-4 text-center md:pt-8">
+              <div className="flex flex-col items-center justify-center pt-2 text-center sm:pt-4 md:pt-8">
                 <motion.p
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15, duration: 0.5 }}
-                  className="text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-[var(--text-accent)]"
+                  className="text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-[var(--text-accent)] sm:text-[0.68rem] sm:tracking-[0.32em]"
                 >
                   {member.role}
                 </motion.p>
                 <h2
-                  className="mt-3 flex flex-nowrap justify-center gap-x-[0.18em] whitespace-nowrap text-[clamp(1.6rem,5vw,3.6rem)] font-bold leading-[1.1] tracking-tight text-[var(--text-primary)]"
+                  className="mt-2 flex flex-nowrap justify-center gap-x-[0.18em] whitespace-nowrap text-[clamp(1.2rem,4.5vw,3.6rem)] font-bold leading-[1.1] tracking-tight text-[var(--text-primary)] sm:mt-3"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   aria-label={member.name}
                 >
@@ -85,9 +85,9 @@ export default function TeamMemberModal({ member, onClose }: Props) {
                   ))}
                 </h2>
                 <div className="mt-4 h-px w-12 bg-[var(--accent-cyan)] opacity-60" />
-                <p className="mt-5 max-w-2xl text-[0.93rem] leading-[1.75] text-[var(--text-secondary)] md:text-[1rem]">{member.bio}</p>
+                <p className="mt-3 max-w-2xl text-[0.8rem] leading-[1.65] text-[var(--text-secondary)] sm:mt-5 sm:text-[0.93rem] sm:leading-[1.75] md:text-[1rem]">{member.bio}</p>
 
-                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <div className="mt-5 flex flex-wrap justify-center gap-2 sm:mt-8 sm:gap-3">
                   {member.linkedin_url && (
                     <a
                       href={member.linkedin_url}

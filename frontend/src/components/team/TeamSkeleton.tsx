@@ -2,8 +2,8 @@
 
 export default function TeamSkeleton() {
   return (
-    <section className="page-container flex flex-col items-center pt-24 pb-32 md:pt-32 md:pb-40">
-      <div className="mx-auto grid w-full max-w-full justify-center gap-10 md:gap-14 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,380px))]">
+    <section className="page-container flex flex-col items-center pt-16 pb-20 sm:pt-24 sm:pb-32 md:pt-32 md:pb-40">
+      <div className="mx-auto grid w-full max-w-full justify-center gap-6 sm:gap-10 md:gap-14 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),360px))] md:[grid-template-columns:repeat(auto-fit,minmax(320px,380px))]">
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}

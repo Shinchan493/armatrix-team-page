@@ -21,8 +21,8 @@ const STEPS = 500;
 const wavePath = (() => {
   const parts: string[] = [];
   for (let i = 0; i <= STEPS; i++) {
-    const x = (i / STEPS) * VB_WIDTH;
-    const y = AMP * Math.sin((2 * Math.PI * x) / WAVELENGTH);
+    const x = Math.round((i / STEPS) * VB_WIDTH * 100) / 100;
+    const y = Math.round(AMP * Math.sin((2 * Math.PI * x) / WAVELENGTH) * 100) / 100;
     parts.push(i === 0 ? `M${x},${y}` : `L${x},${y}`);
   }
   return parts.join(" ");
@@ -39,7 +39,7 @@ function ScrollWave({
   widthPct: MotionValue<string>;
 }) {
   return (
-    <div className="relative flex-1 min-w-0" style={{ height: 80 }}>
+    <div className="relative hidden flex-1 min-w-0 sm:block" style={{ height: 80 }}>
       <motion.div
         className="absolute inset-y-0 overflow-hidden"
         style={{
@@ -103,7 +103,7 @@ export default function TeamHero() {
 
       <motion.h1
         style={{ scale: titleScale, y: titleY, opacity: titleOpacity }}
-        className="page-container relative z-10 max-w-5xl font-[var(--font-heading)] text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--text-primary)] will-change-transform md:text-7xl lg:text-[5.5rem]"
+        className="page-container relative z-10 max-w-5xl font-[var(--font-heading)] text-[2rem] font-semibold leading-[1.08] tracking-tight text-[var(--text-primary)] will-change-transform sm:text-4xl md:text-7xl lg:text-[5.5rem]"
       >
         {titleWords.map((word, index) => (
           <motion.span
@@ -127,7 +127,7 @@ export default function TeamHero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.55, duration: 0.65, ease: "easeOut" }}
-        className="mt-6 max-w-2xl text-balance text-[0.95rem] leading-relaxed text-[var(--text-secondary)] md:text-lg"
+        className="mt-4 max-w-2xl px-4 text-balance text-[0.82rem] leading-relaxed text-[var(--text-secondary)] sm:mt-6 sm:px-0 sm:text-[0.95rem] md:text-lg"
       >
         A focused team of roboticists, designers, and systems thinkers building
         fluid intelligence for constrained industrial environments.
@@ -138,13 +138,13 @@ export default function TeamHero() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.85, duration: 0.6, ease: "easeOut" }}
-        className="absolute bottom-14 left-0 right-0 flex items-center"
+        className="absolute bottom-14 left-0 right-0 hidden items-center sm:flex"
       >
         {/* Left wave — flush against the left box (no gap) */}
         <ScrollWave direction="left" widthPct={waveWidthPct} />
 
         {/* Left logo box — z-10 so it sits on top of the wave edge */}
-        <span className="relative z-10 grid h-9 w-9 shrink-0 place-items-center rounded-[3px] border border-white/35 bg-black">
+        <span className="relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-[3px] border border-white/35 bg-black sm:h-9 sm:w-9">
           <Image
             src="/armatrix-favicon.ico"
             alt="Armatrix"
@@ -155,12 +155,12 @@ export default function TeamHero() {
         </span>
 
         {/* SCROLL text */}
-        <span className="shrink-0 px-4 text-[1.85rem] font-semibold uppercase leading-none tracking-[0.08em] text-white/70 md:text-[2.1rem]">
+        <span className="shrink-0 px-2 text-[1.2rem] font-semibold uppercase leading-none tracking-[0.08em] text-white/70 sm:px-4 sm:text-[1.85rem] md:text-[2.1rem]">
           Scroll
         </span>
 
         {/* Right logo box */}
-        <span className="relative z-10 grid h-9 w-9 shrink-0 place-items-center rounded-[3px] border border-white/35 bg-black">
+        <span className="relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-[3px] border border-white/35 bg-black sm:h-9 sm:w-9">
           <Image
             src="/armatrix-favicon.ico"
             alt="Armatrix"

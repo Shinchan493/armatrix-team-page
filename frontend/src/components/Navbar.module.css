@@ -86,39 +86,60 @@
 
 @media (max-width: 768px) {
     .navbar {
-        padding: 20px 0;
+        padding: 16px 0;
     }
 
     .navbar.scrolled {
-        padding: 14px 0;
+        padding: 12px 0;
     }
 
     .links {
-        gap: 20px;
+        gap: 18px;
     }
 
     .links a {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         letter-spacing: 1px;
     }
 
     .logo {
         gap: 8px;
-        max-width: 220px;
     }
 
     .logoImage {
-        height: 28px;
+        height: 26px;
     }
 
     .logoText {
-        font-size: 1.05rem;
-        letter-spacing: 0.24em;
+        font-size: 0.95rem;
+        letter-spacing: 0.2em;
     }
 }
 
 @media (max-width: 480px) {
+    .navbar {
+        padding: 12px 0;
+    }
+
+    .navbar.scrolled {
+        padding: 10px 0;
+    }
+
     .links {
-        gap: 14px;
+        gap: 12px;
+    }
+
+    .links a {
+        font-size: 0.6rem;
+        letter-spacing: 0.5px;
+    }
+
+    .logoImage {
+        height: 22px;
+    }
+
+    .logoText {
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
     }
 }
