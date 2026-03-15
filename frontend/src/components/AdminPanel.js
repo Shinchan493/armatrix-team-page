@@ -1,8 +1,69 @@
 "use client";
 
 import { useState } from "react";
-import { createTeamMember, updateTeamMember, deleteTeamMember } from "@/lib/api";
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    useSortable,
+    verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { createTeamMember, updateTeamMember, deleteTeamMember, reorderTeamMembers } from "@/lib/api";
 import styles from "./AdminPanel.module.css";
+
+function SortableRow({ member, onEdit, onDelete }) {
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+        id: member.id,
+    });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+        zIndex: isDragging ? 10 : "auto",
+    };
+
+    return (
+        <div ref={setNodeRef} style={style} className={styles.memberRow}>
+            <button
+                className={styles.dragHandle}
+                {...attributes}
+                {...listeners}
+                aria-label="Drag to reorder"
+            >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <circle cx="5" cy="3" r="1.5" />
+                    <circle cx="11" cy="3" r="1.5" />
+                    <circle cx="5" cy="8" r="1.5" />
+                    <circle cx="11" cy="8" r="1.5" />
+                    <circle cx="5" cy="13" r="1.5" />
+                    <circle cx="11" cy="13" r="1.5" />
+                </svg>
+            </button>
+            <div className={styles.memberInfo}>
+                <strong>{member.name}</strong>
+                <span>{member.role}</span>
+            </div>
+            <div className={styles.memberActions}>
+                <button className={styles.btnEdit} onClick={() => onEdit(member)}>
+                    Edit
+                </button>
+                <button className={styles.btnDelete} onClick={() => onDelete(member)}>
+                    Delete
+                </button>
+            </div>
+        </div>
+    );
+}
 
 const EMPTY_FORM = {
     name: "",
@@ -13,13 +74,44 @@ const EMPTY_FORM = {
     github_url: "",
 };
 
-export default function AdminPanel({ members, onMembersChange }) {
+export default function AdminPanel({ members, onMembersChange, onSilentRefresh, setMembers }) {
     const [isOpen, setIsOpen] = useState(false);
     const [form, setForm] = useState(EMPTY_FORM);
     const [editingId, setEditingId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [photoSource, setPhotoSource] = useState("url"); // "url" | "file"
+    const [photoFileName, setPhotoFileName] = useState("");
+    const [reordering, setReordering] = useState(false);
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+        useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    );
+
+    const handleDragEnd = async (event) => {
+        const { active, over } = event;
+        if (!over || active.id === over.id) return;
+
+        const oldIndex = members.findIndex((m) => m.id === active.id);
+        const newIndex = members.findIndex((m) => m.id === over.id);
+        const reordered = arrayMove(members, oldIndex, newIndex);
+
+        // Optimistic update — instantly reflect new order in UI
+        setMembers(reordered);
+
+        setReordering(true);
+        try {
+            await reorderTeamMembers(reordered.map((m) => m.id));
+        } catch (err) {
+            setError("Failed to save new order");
+            // Revert on failure
+            onSilentRefresh();
+        } finally {
+            setReordering(false);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,6 +122,27 @@ export default function AdminPanel({ members, onMembersChange }) {
         setForm(EMPTY_FORM);
         setEditingId(null);
         setError("");
+        setPhotoSource("url");
+        setPhotoFileName("");
+    };
+
+    const handleFileSelect = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/")) {
+            setError("Please select an image file.");
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            setError("Image must be under 5 MB.");
+            return;
+        }
+        setPhotoFileName(file.name);
+        const reader = new FileReader();
+        reader.onload = () => {
+            setForm((prev) => ({ ...prev, photo_url: reader.result }));
+        };
+        reader.readAsDataURL(file);
     };
 
     const handleSubmit = async (e) => {
@@ -156,9 +269,26 @@ export default function AdminPanel({ members, onMembersChange }) {
                             />
                         </div>
 
-                        <div className={styles.formGrid}>
-                            <div className={styles.field}>
-                                <label htmlFor="admin-photo">Photo URL</label>
+                        <div className={styles.field}>
+                            <label>Photo</label>
+                            <div className={styles.photoSourceSelect}>
+                                <button
+                                    type="button"
+                                    className={`${styles.photoSourceOption} ${photoSource === "url" ? styles.active : ""}`}
+                                    onClick={() => setPhotoSource("url")}
+                                >
+                                    Paste URL
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`${styles.photoSourceOption} ${photoSource === "file" ? styles.active : ""}`}
+                                    onClick={() => setPhotoSource("file")}
+                                >
+                                    Upload File
+                                </button>
+                            </div>
+
+                            {photoSource === "url" ? (
                                 <input
                                     id="admin-photo"
                                     name="photo_url"
@@ -166,8 +296,31 @@ export default function AdminPanel({ members, onMembersChange }) {
                                     onChange={handleChange}
                                     placeholder="Auto-generated if empty"
                                 />
-                            </div>
+                            ) : (
+                                <div className={styles.fileInputWrapper}>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileSelect}
+                                        className={styles.fileInput}
+                                    />
+                                    {photoFileName && (
+                                        <div className={styles.photoPreview}>
+                                            {form.photo_url && (
+                                                <img
+                                                    src={form.photo_url}
+                                                    alt="Preview"
+                                                    className={styles.photoPreviewImg}
+                                                />
+                                            )}
+                                            <span className={styles.photoPreviewName}>{photoFileName}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
+                        <div className={styles.formGrid}>
                             <div className={styles.field}>
                                 <label htmlFor="admin-linkedin">LinkedIn URL</label>
                                 <input
@@ -210,31 +363,32 @@ export default function AdminPanel({ members, onMembersChange }) {
                         </div>
                     </form>
 
-                    {/* Members list for edit/delete */}
+                    {/* Members list with drag-and-drop reordering */}
                     <div className={styles.membersList}>
-                        <h3 className={styles.formTitle}>Current Members</h3>
-                        {members.map((m) => (
-                            <div key={m.id} className={styles.memberRow}>
-                                <div className={styles.memberInfo}>
-                                    <strong>{m.name}</strong>
-                                    <span>{m.role}</span>
-                                </div>
-                                <div className={styles.memberActions}>
-                                    <button
-                                        className={styles.btnEdit}
-                                        onClick={() => handleEdit(m)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        className={styles.btnDelete}
-                                        onClick={() => handleDelete(m)}
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+                        <h3 className={styles.formTitle}>
+                            Current Members
+                            {reordering && <span className={styles.reorderingBadge}>Saving...</span>}
+                        </h3>
+                        <p className={styles.reorderHint}>Drag to reorder</p>
+                        <DndContext
+                            sensors={sensors}
+                            collisionDetection={closestCenter}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <SortableContext
+                                items={members.map((m) => m.id)}
+                                strategy={verticalListSortingStrategy}
+                            >
+                                {members.map((m) => (
+                                    <SortableRow
+                                        key={m.id}
+                                        member={m}
+                                        onEdit={handleEdit}
+                                        onDelete={handleDelete}
+                                    />
+                                ))}
+                            </SortableContext>
+                        </DndContext>
                     </div>
                 </div>
             )}

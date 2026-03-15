@@ -27,7 +27,11 @@ export async function createTeamMember(data) {
     });
     if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.detail || "Failed to create member");
+        const detail = err.detail;
+        if (Array.isArray(detail)) {
+            throw new Error(detail.map((d) => d.msg || JSON.stringify(d)).join("; "));
+        }
+        throw new Error(typeof detail === "string" ? detail : "Failed to create member");
     }
     return res.json();
 }
@@ -40,7 +44,11 @@ export async function updateTeamMember(id, data) {
     });
     if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.detail || "Failed to update member");
+        const detail = err.detail;
+        if (Array.isArray(detail)) {
+            throw new Error(detail.map((d) => d.msg || JSON.stringify(d)).join("; "));
+        }
+        throw new Error(typeof detail === "string" ? detail : "Failed to update member");
     }
     return res.json();
 }
@@ -50,5 +58,15 @@ export async function deleteTeamMember(id) {
         method: "DELETE",
     });
     if (!res.ok) throw new Error("Failed to delete member");
+    return res.json();
+}
+
+export async function reorderTeamMembers(orderedIds) {
+    const res = await fetch(`${API_BASE}/api/team/reorder`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ordered_ids: orderedIds }),
+    });
+    if (!res.ok) throw new Error("Failed to reorder members");
     return res.json();
 }

@@ -27,17 +27,24 @@ class TeamMemberCreate(BaseModel):
     """
     name: str = Field(..., min_length=1, max_length=100, description="Full name")
     role: str = Field(..., min_length=1, max_length=100, description="Job title")
-    department: Department = Field(..., description="Department")
+    department: Optional[Department] = Field(None, description="Department")
     bio: str = Field(..., min_length=1, max_length=500, description="Short bio")
     photo_url: str = Field(..., description="URL to profile photo")
-    linkedin: Optional[str] = Field(None, description="LinkedIn profile URL")
-    twitter: Optional[str] = Field(None, description="Twitter/X handle")
+    linkedin_url: Optional[str] = Field(None, description="LinkedIn profile URL")
+    github_url: Optional[str] = Field(None, description="GitHub profile URL")
     order: Optional[int] = Field(0, description="Display order (lower = first)")
 
 
-class TeamMemberResponse(TeamMemberCreate):
+class TeamMemberResponse(BaseModel):
     """
     Schema for returning a team member from the API.
-    Extends the create schema by adding the MongoDB document id.
     """
     id: str = Field(..., description="Unique identifier")
+    name: str
+    role: str
+    department: Optional[Department] = None
+    bio: str
+    photo_url: str
+    linkedin_url: Optional[str] = None
+    github_url: Optional[str] = None
+    order: Optional[int] = 0

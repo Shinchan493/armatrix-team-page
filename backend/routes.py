@@ -27,11 +27,11 @@ def member_to_response(member: dict) -> TeamMemberResponse:
         id=str(member["_id"]),
         name=member["name"],
         role=member["role"],
-        department=member["department"],
+        department=member.get("department"),
         bio=member["bio"],
         photo_url=member["photo_url"],
-        linkedin=member.get("linkedin"),
-        twitter=member.get("twitter"),
+        linkedin_url=member.get("linkedin_url") or member.get("linkedin"),
+        github_url=member.get("github_url") or member.get("twitter"),
         order=member.get("order", 0),
     )
 

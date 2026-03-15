@@ -43,6 +43,17 @@ export default function TeamPage() {
     }
   }, []);
 
+  /** Silently refresh members without showing the loading skeleton. */
+  const refreshMembers = useCallback(async () => {
+    try {
+      const data = await fetchTeamMembers();
+      setMembers(data);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
     loadMembers();
   }, [loadMembers]);
@@ -145,7 +156,7 @@ export default function TeamPage() {
 
         {!loading && !error ? (
           <section className="page-container pt-24 pb-32 md:pt-32 md:pb-40">
-            <AdminPanel members={members} onMembersChange={loadMembers} />
+            <AdminPanel members={members} onMembersChange={loadMembers} onSilentRefresh={refreshMembers} setMembers={setMembers} />
           </section>
         ) : null}
       </main>

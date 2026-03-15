@@ -3,16 +3,16 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 
 
 class TeamMemberBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=80)
     role: str = Field(..., min_length=2, max_length=100)
     bio: str = Field(..., min_length=20, max_length=700)
-    photo_url: HttpUrl
-    linkedin_url: Optional[HttpUrl] = None
-    github_url: Optional[HttpUrl] = None
+    photo_url: str = Field(..., description="URL or base64 data URI for profile photo")
+    linkedin_url: Optional[str] = None
+    github_url: Optional[str] = None
 
 
 class TeamMemberCreate(TeamMemberBase):
@@ -25,6 +25,11 @@ class TeamMemberUpdate(TeamMemberBase):
 
 class TeamMember(TeamMemberBase):
     id: str
+    order: int = 0
+
+
+class ReorderPayload(BaseModel):
+    ordered_ids: List[str]
 
 
 app = FastAPI(
@@ -95,9 +100,9 @@ def _seed_members() -> Dict[str, TeamMember]:
     ]
 
     seeded: Dict[str, TeamMember] = {}
-    for entry in sample:
+    for idx, entry in enumerate(sample):
         member_id = str(uuid4())
-        seeded[member_id] = TeamMember(id=member_id, **entry)
+        seeded[member_id] = TeamMember(id=member_id, order=idx, **entry)
     return seeded
 
 
@@ -115,7 +120,15 @@ async def root():
 
 @app.get("/api/team", response_model=List[TeamMember])
 async def get_all_members():
-    return list(TEAM_MEMBERS.values())
+    return sorted(TEAM_MEMBERS.values(), key=lambda m: m.order)
+
+
+@app.put("/api/team/reorder", response_model=List[TeamMember])
+async def reorder_members(payload: ReorderPayload):
+    for idx, member_id in enumerate(payload.ordered_ids):
+        if member_id in TEAM_MEMBERS:
+            TEAM_MEMBERS[member_id].order = idx
+    return sorted(TEAM_MEMBERS.values(), key=lambda m: m.order)
 
 
 @app.get("/api/team/{member_id}", response_model=TeamMember)
@@ -129,7 +142,8 @@ async def get_member(member_id: str):
 @app.post("/api/team", response_model=TeamMember, status_code=201)
 async def create_member(payload: TeamMemberCreate):
     member_id = str(uuid4())
-    member = TeamMember(id=member_id, **payload.model_dump())
+    max_order = max((m.order for m in TEAM_MEMBERS.values()), default=-1)
+    member = TeamMember(id=member_id, order=max_order + 1, **payload.model_dump())
     TEAM_MEMBERS[member_id] = member
     return member
 
@@ -139,7 +153,8 @@ async def update_member(member_id: str, payload: TeamMemberUpdate):
     if member_id not in TEAM_MEMBERS:
         raise HTTPException(status_code=404, detail="Team member not found")
 
-    updated = TeamMember(id=member_id, **payload.model_dump())
+    existing_order = TEAM_MEMBERS[member_id].order
+    updated = TeamMember(id=member_id, order=existing_order, **payload.model_dump())
     TEAM_MEMBERS[member_id] = updated
     return updated
 
