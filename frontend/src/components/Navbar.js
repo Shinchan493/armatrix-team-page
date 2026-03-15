@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 
@@ -16,9 +17,17 @@ export default function Navbar() {
 
     return (
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-            <div className={styles.inner}>
-                <a href="https://armatrix.in" className={styles.logo} target="_blank" rel="noopener noreferrer">
-                    ARMATRIX
+            <div className={`${styles.inner} page-container`}>
+                <a href="/team" className={styles.logo} aria-label="Armatrix team page home">
+                    <Image
+                        src="/armatrix-logo.webp"
+                        alt="Armatrix"
+                        width={220}
+                        height={52}
+                        priority
+                        className={styles.logoImage}
+                    />
+                    <span className={styles.logoText}>ARMATRIX</span>
                 </a>
                 <div className={styles.links}>
                     <a href="https://armatrix.in" target="_blank" rel="noopener noreferrer">HOME</a>

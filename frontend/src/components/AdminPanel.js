@@ -7,12 +7,10 @@ import styles from "./AdminPanel.module.css";
 const EMPTY_FORM = {
     name: "",
     role: "",
-    department: "Engineering",
     bio: "",
     photo_url: "",
-    linkedin: "",
-    twitter: "",
-    order: 0,
+    linkedin_url: "",
+    github_url: "",
 };
 
 export default function AdminPanel({ members, onMembersChange }) {
@@ -25,10 +23,7 @@ export default function AdminPanel({ members, onMembersChange }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({
-            ...prev,
-            [name]: name === "order" ? parseInt(value) || 0 : value,
-        }));
+        setForm((prev) => ({ ...prev, [name]: value }));
     };
 
     const resetForm = () => {
@@ -49,8 +44,8 @@ export default function AdminPanel({ members, onMembersChange }) {
             photo_url:
                 form.photo_url ||
                 `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(form.name)}&backgroundColor=transparent`,
-            linkedin: form.linkedin || null,
-            twitter: form.twitter || null,
+            linkedin_url: form.linkedin_url || null,
+            github_url: form.github_url || null,
         };
 
         try {
@@ -75,12 +70,10 @@ export default function AdminPanel({ members, onMembersChange }) {
         setForm({
             name: member.name,
             role: member.role,
-            department: member.department,
             bio: member.bio,
             photo_url: member.photo_url,
-            linkedin: member.linkedin || "",
-            twitter: member.twitter || "",
-            order: member.order || 0,
+            linkedin_url: member.linkedin_url || "",
+            github_url: member.github_url || "",
         });
         setError("");
         setSuccess("");
@@ -143,34 +136,6 @@ export default function AdminPanel({ members, onMembersChange }) {
                                 />
                             </div>
 
-                            <div className={styles.field}>
-                                <label htmlFor="admin-dept">Department *</label>
-                                <select
-                                    id="admin-dept"
-                                    name="department"
-                                    value={form.department}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="Leadership">Leadership</option>
-                                    <option value="Engineering">Engineering</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Operations">Operations</option>
-                                    <option value="Marketing">Marketing</option>
-                                </select>
-                            </div>
-
-                            <div className={styles.field}>
-                                <label htmlFor="admin-order">Display Order</label>
-                                <input
-                                    id="admin-order"
-                                    name="order"
-                                    type="number"
-                                    value={form.order}
-                                    onChange={handleChange}
-                                    placeholder="0"
-                                />
-                            </div>
                         </div>
 
                         <div className={styles.field}>
@@ -202,21 +167,21 @@ export default function AdminPanel({ members, onMembersChange }) {
                                 <label htmlFor="admin-linkedin">LinkedIn URL</label>
                                 <input
                                     id="admin-linkedin"
-                                    name="linkedin"
-                                    value={form.linkedin}
+                                    name="linkedin_url"
+                                    value={form.linkedin_url}
                                     onChange={handleChange}
                                     placeholder="https://linkedin.com/in/..."
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="admin-twitter">Twitter/X Handle</label>
+                                <label htmlFor="admin-github">GitHub URL</label>
                                 <input
-                                    id="admin-twitter"
-                                    name="twitter"
-                                    value={form.twitter}
+                                    id="admin-github"
+                                    name="github_url"
+                                    value={form.github_url}
                                     onChange={handleChange}
-                                    placeholder="@handle"
+                                    placeholder="https://github.com/..."
                                 />
                             </div>
                         </div>
@@ -247,7 +212,7 @@ export default function AdminPanel({ members, onMembersChange }) {
                             <div key={m.id} className={styles.memberRow}>
                                 <div className={styles.memberInfo}>
                                     <strong>{m.name}</strong>
-                                    <span>{m.role} · {m.department}</span>
+                                    <span>{m.role}</span>
                                 </div>
                                 <div className={styles.memberActions}>
                                     <button

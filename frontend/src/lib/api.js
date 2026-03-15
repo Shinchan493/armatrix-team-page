@@ -8,7 +8,7 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function fetchTeamMembers() {
-    const res = await fetch(`${API_BASE}/api/team/`, { cache: "no-store" });
+    const res = await fetch(`${API_BASE}/api/team`, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to fetch team members");
     return res.json();
 }
@@ -20,7 +20,7 @@ export async function fetchTeamMember(id) {
 }
 
 export async function createTeamMember(data) {
-    const res = await fetch(`${API_BASE}/api/team/`, {
+    const res = await fetch(`${API_BASE}/api/team`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

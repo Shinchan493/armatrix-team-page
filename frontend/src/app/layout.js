@@ -4,6 +4,10 @@ export const metadata = {
   title: "Team — Armatrix",
   description:
     "Meet the team behind Armatrix — building snake-like robotic arms for confined and hazardous spaces.",
+  icons: {
+    icon: "/armatrix-favicon.ico",
+    shortcut: "/armatrix-favicon.ico",
+  },
   openGraph: {
     title: "Team — Armatrix",
     description:

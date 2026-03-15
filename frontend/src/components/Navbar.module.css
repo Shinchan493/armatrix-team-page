@@ -15,24 +15,36 @@
 }
 
 .inner {
-    max-width: 1400px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .logo {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.3rem;
-    letter-spacing: 4px;
-    color: var(--text-primary);
-    transition: color var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
 .logo:hover {
-    color: var(--accent-cyan);
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.logoImage {
+    width: auto;
+    height: 36px;
+    object-fit: contain;
+}
+
+.logoText {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    color: var(--text-primary);
+    line-height: 1;
 }
 
 .links {
@@ -81,8 +93,17 @@
     }
 
     .logo {
-        font-size: 1.1rem;
-        letter-spacing: 3px;
+        gap: 8px;
+        max-width: 220px;
+    }
+
+    .logoImage {
+        height: 28px;
+    }
+
+    .logoText {
+        font-size: 1.05rem;
+        letter-spacing: 0.24em;
     }
 }
 

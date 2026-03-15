@@ -1,0 +1,22 @@
+.cursor {
+  position: fixed;
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: width 0.2s ease, height 0.2s ease, top 0.2s ease, left 0.2s ease, opacity 0.2s ease;
+  will-change: transform;
+}
+
+.cursor.hovering {
+  width: 32px;
+  height: 32px;
+  top: -16px;
+  left: -16px;
+  opacity: 0.6;
+}

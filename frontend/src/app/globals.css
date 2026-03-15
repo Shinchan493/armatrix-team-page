@@ -1,10 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
 /* =============================================
    ARMATRIX TEAM PAGE — GLOBAL DESIGN SYSTEM
    Inspired by armatrix.in: pure black, glows,
    glassmorphism, Space Grotesk + Inter fonts
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ---- CSS Custom Properties (Design Tokens) ---- */
 :root {
@@ -29,10 +47,10 @@
   /* Accent Colors */
   --accent-cyan: #00E5FF;
   --accent-magenta: #C850C0;
-  --accent-gold: #FFB347;
+  --accent-gold: #FFB800;
   --accent-cyan-glow: rgba(0, 229, 255, 0.15);
   --accent-magenta-glow: rgba(200, 80, 192, 0.12);
-  --accent-gold-glow: rgba(255, 179, 71, 0.12);
+  --accent-gold-glow: rgba(255, 184, 0, 0.12);
 
   /* Typography */
   --font-heading: 'Space Grotesk', sans-serif;
@@ -48,6 +66,11 @@
   --transition-fast: 0.2s ease;
   --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --page-max-width: 1400px;
+  --page-gutter: 40px;
+  --page-gutter-mobile: 24px;
 }
 
 /* ---- Reset & Base ---- */
@@ -63,6 +86,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -72,6 +96,14 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
+  cursor: none;
+}
+
+/* Restore cursor on touch/mobile */
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
 }
 
 a {
@@ -92,7 +124,9 @@ button {
   color: inherit;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: var(--font-body);
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
@@ -105,7 +139,9 @@ input, textarea, select {
   width: 100%;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   border-color: var(--accent-cyan);
 }
 
@@ -118,13 +154,16 @@ select option {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.25);
 }
@@ -135,6 +174,7 @@ select option {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -142,8 +182,13 @@ select option {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
@@ -151,6 +196,7 @@ select option {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -158,13 +204,33 @@ select option {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .animate-fade-in-up {
@@ -172,11 +238,46 @@ select option {
   opacity: 0;
 }
 
-.stagger-1 { animation-delay: 0.05s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.15s; }
-.stagger-4 { animation-delay: 0.2s; }
-.stagger-5 { animation-delay: 0.25s; }
-.stagger-6 { animation-delay: 0.3s; }
-.stagger-7 { animation-delay: 0.35s; }
-.stagger-8 { animation-delay: 0.4s; }
+.stagger-1 {
+  animation-delay: 0.05s;
+}
+
+.stagger-2 {
+  animation-delay: 0.1s;
+}
+
+.stagger-3 {
+  animation-delay: 0.15s;
+}
+
+.stagger-4 {
+  animation-delay: 0.2s;
+}
+
+.stagger-5 {
+  animation-delay: 0.25s;
+}
+
+.stagger-6 {
+  animation-delay: 0.3s;
+}
+
+.stagger-7 {
+  animation-delay: 0.35s;
+}
+
+.page-container {
+  width: min(var(--page-max-width), calc(100% - (var(--page-gutter) * 2)));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    width: min(var(--page-max-width), calc(100% - (var(--page-gutter-mobile) * 2)));
+  }
+}
+
+.stagger-8 {
+  animation-delay: 0.4s;
+}
