@@ -82,7 +82,7 @@ python seed.py
 uvicorn main:app --reload --port 8000
 ```
 
-API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+API docs: [https://armatrix-team-page-932b.onrender.com/docs](https://armatrix-team-page-932b.onrender.com/docs)
 
 ### Frontend
 
@@ -96,7 +96,7 @@ npm install
 npm run dev
 ```
 
-Visit: [http://localhost:3000/team](http://localhost:3000/team)
+Visit: [http://https://armatrix-team-page-weld.vercel.app/team0/team](http://https://armatrix-team-page-weld.vercel.app/team0/team)
 
 ---
 
