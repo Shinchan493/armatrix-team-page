@@ -96,7 +96,7 @@ npm install
 npm run dev
 ```
 
-Visit: [https://armatrix-team-page-weld.vercel.app/team](https://armatrix-team-page-weld.vercel.app/team0/team)
+Visit: [https://armatrix-team-page-weld.vercel.app/team](https://armatrix-team-page-weld.vercel.app/team)
 
 ---
 
