@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { useMemo, useState, useEffect } from "react";
 import type { TeamMember } from "@/lib/team-types";
 
 type Props = {
@@ -10,7 +11,18 @@ type Props = {
 };
 
 export default function TeamMemberModal({ member, onClose }: Props) {
-  const isDicebearAvatar = member?.photo_url?.includes("api.dicebear.com") ?? false;
+  const fallbackPhotoUrl = useMemo(
+    () => member ? `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(member.name)}&backgroundColor=transparent` : "",
+    [member?.name],
+  );
+  
+  const [imageError, setImageError] = useState(false);
+  const imageSrc = imageError ? fallbackPhotoUrl : (member?.photo_url || fallbackPhotoUrl);
+  const isDicebearAvatar = imageSrc?.includes("api.dicebear.com") ?? false;
+
+  useEffect(() => {
+    setImageError(false);
+  }, [member?.photo_url]);
 
   return (
     <AnimatePresence>
@@ -49,11 +61,12 @@ export default function TeamMemberModal({ member, onClose }: Props) {
             <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-[0.9fr_1.1fr] md:gap-10">
               <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)]">
                 <Image
-                  src={member.photo_url}
+                  src={imageSrc}
                   alt={member.name}
                   width={1200}
                   height={1200}
                   unoptimized={isDicebearAvatar}
+                  onError={() => setImageError(true)}
                   className="h-full w-full object-cover"
                 />
               </div>
